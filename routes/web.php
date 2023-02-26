@@ -36,6 +36,7 @@ Route::get('/news/{news?}', function ($news=' ') {
     return 'Halaman News '.$news;
 });
 
+
 Route::prefix('/program')->group(function(){
     Route::get('/karir',function(){
         return '<a href="https://www.educastudio.com/program/karir">Halaman Karir</a>';
