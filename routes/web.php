@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 /*
@@ -14,43 +15,21 @@ use App\Http\Controllers\ContactController;
 */
 
 Route::get('/', function () {
-    echo 'Halaman Awal Website';
+    return view('welcome');
 });
 
 Route::prefix('/category')->group(function(){
-    Route::get('/marbel-edu-games',function(){
-        return '<a href="https://www.educastudio.com/category/marbel-edu-games">Halaman Marbel Edu Games</a>';
-    });
-    Route::get('/marbel-and-friends-kids-games',function(){
-        return '<a href="https://www.educastudio.com/category/marbel-and-friends-kids-games">Halaman Marbel and Friends Kids Games</a>';
-    });
-    Route::get('/riri-story-books',function(){
-        return '<a href="https://www.educastudio.com/category/riri-story-books">Halaman Riri Story Books</a>';
-    });
-    Route::get('/kolak-kids-songs',function(){
-        return '<a href="https://www.educastudio.com/category/kolak-kids-songs">Halaman Kolak Kids Songs</a>';
-    });
+    Route::get('product', [PageController::class, 'product'])->name('product');
 });
 
-Route::get('/news/{news?}', function ($news=' ') {
-    return 'Halaman News '.$news;
-});
-
+Route::get('/news/{news}', [PageController::class, 'news'])->name('news');
 
 Route::prefix('/program')->group(function(){
-    Route::get('/karir',function(){
-        return '<a href="https://www.educastudio.com/program/karir">Halaman Karir</a>';
-    });
-    Route::get('/magang',function(){
-        return '<a href="https://www.educastudio.com/program/magang">Halaman Magang</a>';
-    });
-    Route::get('/kunjungan-industri',function(){
-        return '<a href="https://www.educastudio.com/program/kunjungan-industri">Halaman Kunjungan Industri</a>';
-    });
+    Route::get('program', [PageController::class, 'program'])->name('program');
 });
+Route::get('/about-us', [PageController::class, 'about_us'])->name('about-us');
 
-Route::get('/about-us', function () {
-    echo '<a href="https://www.educastudio.com/about-us">Halaman About-Us</a>';
-});
+Route::resource('/contact-us', PageController::class, [
+    'only' => ['index']
+]);
 
-Route::resource('/contact-us', ContactController::class)->only('store');
